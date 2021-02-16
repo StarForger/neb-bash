@@ -1,3 +1,3 @@
 # README
 
-A collection of usefult bash functions
+A collection of useful bash functions
