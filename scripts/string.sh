@@ -56,3 +56,22 @@ function string_is_empty_or_null {
   local -r response="$1"
   [[ -z "$response" || "$response" == "null" ]]
 }
+
+# Return colour format string when given level or colour name
+function string_colour() {
+  local name="${1,,}"
+  case "$name" in
+    "reset")
+      echo $(tput sgr0)
+    ;;
+    "warn"|"yellow")
+      echo $(tput setaf 3)
+    ;;
+    "error"|"red")
+      echo $(tput setaf 1)
+    ;;
+    *)
+      :
+    ;;
+  esac
+}
