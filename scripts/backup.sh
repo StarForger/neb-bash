@@ -7,6 +7,7 @@ dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 source "${dir}/log.sh"
 source "${dir}/function.sh"
 
+: ${BACKUP_TYPE:="tar"}
 : ${BACKUP_NAME:="neb-backup"}
 : ${BACKUP_DIR:="/srv/restic-repo"}
 : ${BACKUP_RETENTION_DAYS:=7}
@@ -14,12 +15,7 @@ source "${dir}/function.sh"
 
 : ${RESTIC_REPOSITORY:=${BACKUP_DIR}} #required by restic
 
-function backup_restic() { 
-  if [[ ! $(command -v "restic" &> /dev/null) ]]; then
-    log error "restic is not available"
-    return 1
-  fi
-
+function backup_restic() {
   function _delete_old_backups() {    
     command restic forget --tag "${BACKUP_NAME}" --keep-within "${BACKUP_RETENTION_DAYS}d" "${@}"
   }
@@ -122,6 +118,24 @@ function backup_tar() {
   }
 
   function_call "${@}"
+}
+
+# init, backup, prune
+function backup_exec() {
+  case "${BACKUP_TYPE^^}" in
+    TAR)
+      backup_tar "${@}"
+    ;;
+    RESTIC)
+      if ! command -v restic &> /dev/null; then
+        log error "restic is not available"
+        return 1
+      fi
+      backup_restic "${@}"
+    ;;
+    *)
+      log error "backup type ${backup_type} does not exist"
+  esac
 }
 
 #TODO select tar or restic
