@@ -57,8 +57,9 @@ function string_is_empty_or_null {
   [[ -z "$response" || "$response" == "null" ]]
 }
 
-# Return colour format string when given level or colour name
+# Return colour format string when given level or colour name (requires ncurses)
 function string_colour() {
+  [[ ! $(command -v "tput" &> /dev/null) ]] && return
   local name="${1,,}"
   case "$name" in
     "reset")

@@ -29,3 +29,5 @@ set -o pipefail
 # Make debugging easier when you use `set -x`
 # See: http://wiki.bash-hackers.org/scripting/debuggingtips#making_xtrace_more_useful
 export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+
+#TODO load list of sources, check they exist, source if they all do, exit with error if they don't
