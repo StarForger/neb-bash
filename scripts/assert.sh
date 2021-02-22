@@ -43,3 +43,14 @@ function assert_value_in_list {
     exit 1
   fi
 }
+
+# Check that the given directory exists
+function assert_dir_exists {
+  local -r dir_name="${1}"  
+  local -r reason="${2}"
+
+  if [[ ! -d "${dir_name}" ]]; then
+    log error "'${dir_name}' must already exist. ${reason}"
+    exit 1
+  fi  
+}
