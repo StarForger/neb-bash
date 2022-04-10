@@ -68,7 +68,7 @@ function string_colour() {
     "warn"|"yellow")
       echo $(tput setaf 3)
     ;;
-    "error"|"red")
+    "error"|"fatal"|"red")
       echo $(tput setaf 1)
     ;;
     *)

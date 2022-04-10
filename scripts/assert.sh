@@ -54,3 +54,5 @@ function assert_file_exists {
     exit 1
   fi  
 }
+
+#TODO function call assert

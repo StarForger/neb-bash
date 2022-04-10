@@ -7,7 +7,7 @@ function_exists() {
   local -r name="${1}"
   [ "$(type -t "${name}")" == "function" ]
 }
-
+# TODO allow for log of function name (for verbose logging)
 function_call() {
   local -r function_name="${1}"
   shift
