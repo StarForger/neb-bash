@@ -27,8 +27,6 @@ function log {
     ([[ "$#" -ge 1 ]] && <<<"${*}" cat -) || cat -
   ) | awk -v level="${level}" -v name="$(basename "$0")" -v colour="$colour" -v r="$reset" \
     '{ printf("%s [%s] [%s] %s%s%s\n", strftime("%FT%T"), level, name, colour, $0, r); fflush(); }'
-
-  [[ "${level}" == "FATAL" ]] && exit 1
 } >&2
 
 # TODO verbose logging mode
